@@ -72,16 +72,17 @@ elif [ "$1" = 'dump-nand' ]; then
     "$oscheck"/iproxy 2222 22 &>/dev/null &
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/umount /mnt1" &>/dev/null &
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/umount /mnt2" &>/dev/null &
-    echo "[*] Backing up /dev/disk0 to $dir/disk0.gz, this may take up to 15 minutes..."
+    sleep 2
+    echo "[*] Backing up /dev/disk0 to disk0.gz, this may take up to 15 minutes..."
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "dd if=/dev/disk0 bs=64k | gzip -1 -" | dd of=disk0.gz bs=64k
-    read -p "would you like to also back up /dev/disk0s1s1 to $dir/disk0s1s1.gz? " r
+    read -p "Would you like to also back up /dev/disk0s1s1 to disk0s1s1.gz? " r
     if [[ ! "$r" == "no" && ! "$r" == "n" ]]; then
-        echo "[*] Backing up /dev/disk0s1s1 to $dir/disk0s1s1.gz, this may take up to 15 minutes..."
+        echo "[*] Backing up /dev/disk0s1s1 to disk0s1s1.gz, this may take up to 15 minutes..."
         "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "dd if=/dev/disk0s1s1 bs=64k | gzip -1 -" | dd of=disk0s1s1.gz bs=64k
     fi
-    read -p "would you like to also back up /dev/disk0s1s2 to $dir/disk0s1s2.gz? " r
+    read -p "Would you like to also back up /dev/disk0s1s2 to disk0s1s2.gz? " r
     if [[ ! "$r" == "no" && ! "$r" == "n" ]]; then
-        echo "[*] Backing up /dev/disk0s1s2 to $dir/disk0s1s2.gz, this may take up to 15 minutes..."
+        echo "[*] Backing up /dev/disk0s1s2 to disk0s1s2.gz, this may take up to 15 minutes..."
         "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "dd if=/dev/disk0s1s2 bs=64k | gzip -1 -" | dd of=disk0s1s2.gz bs=64k
     fi
     echo "[*] Disabling auto-boot in nvram to prevent effaceable storage issues..."
@@ -94,7 +95,8 @@ elif [ "$1" = 'dump-mnt1' ]; then
     "$oscheck"/iproxy 2222 22 &>/dev/null &
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/umount /mnt1" &>/dev/null &
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/umount /mnt2" &>/dev/null &
-    echo "[*] Backing up /dev/disk0s1s1 to $dir/disk0s1s1.gz, this may take up to 15 minutes..."
+    sleep 2
+    echo "[*] Backing up /dev/disk0s1s1 to disk0s1s1.gz, this may take up to 15 minutes..."
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "dd if=/dev/disk0s1s1 bs=64k | gzip -1 -" | dd of=disk0s1s1.gz bs=64k
     echo "[*] Disabling auto-boot in nvram to prevent effaceable storage issues..."
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=false" &>/dev/null &
@@ -106,7 +108,8 @@ elif [ "$1" = 'dump-mnt2' ]; then
     "$oscheck"/iproxy 2222 22 &>/dev/null &
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/umount /mnt1" &>/dev/null &
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/umount /mnt2" &>/dev/null &
-    echo "[*] Backing up /dev/disk0s1s2 to $dir/disk0s1s2.gz, this may take up to 15 minutes..."
+    sleep 2
+    echo "[*] Backing up /dev/disk0s1s2 to disk0s1s2.gz, this may take up to 15 minutes..."
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "dd if=/dev/disk0s1s2 bs=64k | gzip -1 -" | dd of=disk0s1s2.gz bs=64k
     echo "[*] Disabling auto-boot in nvram to prevent effaceable storage issues..."
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=false" &>/dev/null &
@@ -118,7 +121,8 @@ elif [ "$1" = 'restore-nand' ]; then
     "$oscheck"/iproxy 2222 22 &>/dev/null &
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/umount /mnt1" &>/dev/null &
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/umount /mnt2" &>/dev/null &
-    echo "[*] Restoring /dev/disk0 from $dir/disk0.gz, this may take up to 15 minutes..."
+    sleep 2
+    echo "[*] Restoring /dev/disk0 from disk0.gz, this may take up to 15 minutes..."
     dd if=disk0.gz bs=64k | "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "gzip -d | dd of=/dev/disk0 bs=64k"
     echo "[*] Enabling auto-boot in nvram to allow booting the restored nand after a reboot..."
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=true" &>/dev/null &
@@ -130,7 +134,8 @@ elif [ "$1" = 'restore-mnt1' ]; then
     "$oscheck"/iproxy 2222 22 &>/dev/null &
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/umount /mnt1" &>/dev/null &
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/umount /mnt2" &>/dev/null &
-    echo "[*] Restoring /dev/disk0s1s1 from $dir/disk0s1s1.gz, this may take up to 15 minutes..."
+    sleep 2
+    echo "[*] Restoring /dev/disk0s1s1 from disk0s1s1.gz, this may take up to 15 minutes..."
     dd if=disk0s1s1.gz bs=64k | "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "gzip -d | dd of=/dev/disk0s1s1 bs=64k"
     echo "[*] Enabling auto-boot in nvram to allow booting the restored nand after a reboot..."
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=true" &>/dev/null &
@@ -142,7 +147,8 @@ elif [ "$1" = 'restore-mnt2' ]; then
     "$oscheck"/iproxy 2222 22 &>/dev/null &
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/umount /mnt1" &>/dev/null &
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/umount /mnt2" &>/dev/null &
-    echo "[*] Restoring /dev/disk0s1s2 from $dir/disk0s1s2.gz, this may take up to 15 minutes..."
+    sleep 2
+    echo "[*] Restoring /dev/disk0s1s2 from disk0s1s2.gz, this may take up to 15 minutes..."
     dd if=disk0s1s2.gz bs=64k | "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "gzip -d | dd of=/dev/disk0s1s2 bs=64k"
     echo "[*] Enabling auto-boot in nvram to allow booting the restored nand after a reboot..."
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=true" &>/dev/null &
