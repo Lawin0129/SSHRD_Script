@@ -86,7 +86,7 @@ elif [ "$1" = 'dump-nand' ]; then
         "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "dd if=/dev/disk0s1s2 bs=64k | gzip -1 -" | dd of=disk0s1s2.gz bs=64k
     fi
     echo "[*] Disabling auto-boot in nvram to prevent effaceable storage issues..."
-    "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=false" &>/dev/null &
+    "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=false" &>/dev/null
     echo "[*] You can enable auto-boot again at any time by running $0 fix-auto-boot"
     echo "[*] Done"
     killall iproxy
@@ -99,7 +99,7 @@ elif [ "$1" = 'dump-mnt1' ]; then
     echo "[*] Backing up /dev/disk0s1s1 to disk0s1s1.gz, this may take up to 15 minutes..."
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "dd if=/dev/disk0s1s1 bs=64k | gzip -1 -" | dd of=disk0s1s1.gz bs=64k
     echo "[*] Disabling auto-boot in nvram to prevent effaceable storage issues..."
-    "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=false" &>/dev/null &
+    "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=false" &>/dev/null
     echo "[*] You can enable auto-boot again at any time by running $0 fix-auto-boot"
     echo "[*] Done"
     killall iproxy
@@ -112,7 +112,7 @@ elif [ "$1" = 'dump-mnt2' ]; then
     echo "[*] Backing up /dev/disk0s1s2 to disk0s1s2.gz, this may take up to 15 minutes..."
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "dd if=/dev/disk0s1s2 bs=64k | gzip -1 -" | dd of=disk0s1s2.gz bs=64k
     echo "[*] Disabling auto-boot in nvram to prevent effaceable storage issues..."
-    "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=false" &>/dev/null &
+    "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=false" &>/dev/null
     echo "[*] You can enable auto-boot again at any time by running $0 fix-auto-boot"
     echo "[*] Done"
     killall iproxy
@@ -125,9 +125,9 @@ elif [ "$1" = 'restore-nand' ]; then
     echo "[*] Restoring /dev/disk0 from disk0.gz, this may take up to 15 minutes..."
     dd if=disk0.gz bs=64k | "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "gzip -d | dd of=/dev/disk0 bs=64k"
     echo "[*] Enabling auto-boot in nvram to allow booting the restored nand after a reboot..."
-    "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=true" &>/dev/null &
+    "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=true" &>/dev/null
     echo "[*] Done"
-    $("$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/reboot &" &>/dev/null &)
+    "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/reboot"
     killall iproxy
     exit
 elif [ "$1" = 'restore-mnt1' ]; then
@@ -138,9 +138,9 @@ elif [ "$1" = 'restore-mnt1' ]; then
     echo "[*] Restoring /dev/disk0s1s1 from disk0s1s1.gz, this may take up to 15 minutes..."
     dd if=disk0s1s1.gz bs=64k | "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "gzip -d | dd of=/dev/disk0s1s1 bs=64k"
     echo "[*] Enabling auto-boot in nvram to allow booting the restored nand after a reboot..."
-    "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=true" &>/dev/null &
+    "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=true" &>/dev/null
     echo "[*] Done"
-    $("$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/reboot &" &>/dev/null &)
+    "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/reboot"
     killall iproxy
     exit
 elif [ "$1" = 'restore-mnt2' ]; then
@@ -151,9 +151,9 @@ elif [ "$1" = 'restore-mnt2' ]; then
     echo "[*] Restoring /dev/disk0s1s2 from disk0s1s2.gz, this may take up to 15 minutes..."
     dd if=disk0s1s2.gz bs=64k | "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "gzip -d | dd of=/dev/disk0s1s2 bs=64k"
     echo "[*] Enabling auto-boot in nvram to allow booting the restored nand after a reboot..."
-    "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=true" &>/dev/null &
+    "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=true" &>/dev/null
     echo "[*] Done"
-    $("$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/reboot &" &>/dev/null &)
+    "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/reboot"
     killall iproxy
     exit
 elif [ "$1" = 'reboot' ]; then
