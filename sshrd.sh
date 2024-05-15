@@ -89,6 +89,7 @@ elif [ "$1" = 'dump-nand' ]; then
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=false" &>/dev/null
     echo "[*] You can enable auto-boot again at any time by running $0 fix-auto-boot"
     echo "[*] Done"
+    "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/reboot"
     killall iproxy
     exit
 elif [ "$1" = 'dump-mnt1' ]; then
@@ -102,6 +103,7 @@ elif [ "$1" = 'dump-mnt1' ]; then
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=false" &>/dev/null
     echo "[*] You can enable auto-boot again at any time by running $0 fix-auto-boot"
     echo "[*] Done"
+    "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/reboot"
     killall iproxy
     exit
 elif [ "$1" = 'dump-mnt2' ]; then
@@ -115,6 +117,7 @@ elif [ "$1" = 'dump-mnt2' ]; then
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=false" &>/dev/null
     echo "[*] You can enable auto-boot again at any time by running $0 fix-auto-boot"
     echo "[*] Done"
+    "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/reboot"
     killall iproxy
     exit
 elif [ "$1" = 'restore-nand' ]; then
@@ -202,7 +205,15 @@ if [ ! -e sshramdisk ]; then
     mkdir sshramdisk
 fi
 
-if [ "$1" = 'reset' ] || [ "$1" = 'fix-auto-boot' ]; then
+if [ "$1" = 'fix-auto-boot' ]; then
+    "$oscheck"/irecovery -c "setenv auto-boot true"
+    "$oscheck"/irecovery -c saveenv
+    "$oscheck"/irecovery -c reset
+    echo "[*] Device should now be able to boot normally"
+    exit
+fi
+
+if [ "$1" = 'reset' ]; then
     if [ ! -e sshramdisk/iBSS.img4 ]; then
         echo "[-] Please create an SSH ramdisk first!"
         exit
@@ -223,18 +234,11 @@ if [ "$1" = 'reset' ] || [ "$1" = 'fix-auto-boot' ]; then
     fi
 
     sleep 2
-    if [ "$1" = 'reset' ]; then
-        "$oscheck"/irecovery -c "setenv oblit-inprogress 5"
-        "$oscheck"/irecovery -c saveenv
-        "$oscheck"/irecovery -c reset
-        echo "[*] Device should now show a progress bar and erase all data"
-    elif [ "$1" = 'fix-auto-boot' ]; then
-        "$oscheck"/irecovery -c "setenv auto-boot true"
-        "$oscheck"/irecovery -c saveenv
-        "$oscheck"/irecovery -c reset
-        echo "[*] Device should now be able to boot normally"
-    fi
+    "$oscheck"/irecovery -c "setenv oblit-inprogress 5"
+    "$oscheck"/irecovery -c saveenv
+    "$oscheck"/irecovery -c reset
 
+    echo "[*] Device should now show a progress bar and erase all data"
     exit
 fi
 
