@@ -50,6 +50,14 @@ fi
 
 chmod +x "$oscheck"/*
 
+if [ "$1" = 'fix-auto-boot' ]; then
+    "$oscheck"/irecovery -c "setenv auto-boot true"
+    "$oscheck"/irecovery -c saveenv
+    "$oscheck"/irecovery -c reset
+    echo "[*] Device should now be able to boot normally"
+    exit
+fi
+
 if [ "$1" = 'clean' ]; then
     rm -rf sshramdisk work
     echo "[*] Removed the current created SSH ramdisk"
@@ -203,14 +211,6 @@ fi
 
 if [ ! -e sshramdisk ]; then
     mkdir sshramdisk
-fi
-
-if [ "$1" = 'fix-auto-boot' ]; then
-    "$oscheck"/irecovery -c "setenv auto-boot true"
-    "$oscheck"/irecovery -c saveenv
-    "$oscheck"/irecovery -c reset
-    echo "[*] Device should now be able to boot normally"
-    exit
 fi
 
 if [ "$1" = 'reset' ]; then
