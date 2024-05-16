@@ -95,7 +95,7 @@ elif [ "$1" = 'dump-nand' ]; then
     fi
     echo "[*] Disabling auto-boot in nvram to prevent effaceable storage issues..."
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=false" &>/dev/null
-    echo "[*] You can enable auto-boot again at any time by running $0 fix-auto-boot"
+    echo "[*] You can enable auto-boot again at any time by running '$0 fix-auto-boot' when iDevice is in recovery mode."
     echo "[*] Done"
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/reboot"
     killall iproxy
@@ -109,7 +109,7 @@ elif [ "$1" = 'dump-mnt1' ]; then
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "dd if=/dev/disk0s1s1 bs=64k | gzip -1 -" | dd of=disk0s1s1.gz bs=64k
     echo "[*] Disabling auto-boot in nvram to prevent effaceable storage issues..."
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=false" &>/dev/null
-    echo "[*] You can enable auto-boot again at any time by running $0 fix-auto-boot"
+    echo "[*] You can enable auto-boot again at any time by running '$0 fix-auto-boot' when iDevice is in recovery mode."
     echo "[*] Done"
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/reboot"
     killall iproxy
@@ -123,7 +123,7 @@ elif [ "$1" = 'dump-mnt2' ]; then
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "dd if=/dev/disk0s1s2 bs=64k | gzip -1 -" | dd of=disk0s1s2.gz bs=64k
     echo "[*] Disabling auto-boot in nvram to prevent effaceable storage issues..."
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/usr/sbin/nvram auto-boot=false" &>/dev/null
-    echo "[*] You can enable auto-boot again at any time by running $0 fix-auto-boot"
+    echo "[*] You can enable auto-boot again at any time by running '$0 fix-auto-boot' when iDevice is in recovery mode."
     echo "[*] Done"
     "$oscheck"/sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no -p2222 root@localhost "/sbin/reboot"
     killall iproxy
