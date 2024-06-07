@@ -21,10 +21,10 @@ Create and boot a SSH ramdisk on checkm8 devices
 
 # Usage
 
-1. Clone and cd into this repository: `git clone https://github.com/verygenericname/SSHRD_Script --recursive && cd SSHRD_Script`
+1. Clone and cd into this repository: `git clone https://github.com/Lawin0129/SSHRD_Script --recursive && cd SSHRD_Script`
     - If you have cloned this before, run `cd SSHRD_Script && git pull` to pull new changes
 2. Run `./sshrd.sh <iOS version for ramdisk>`, **without** the `<>`.
-    - The iOS version doesn't have to be the version you're currently on, but it should be close enough, and SEP has to be compatible
+    - If your device is on iOS 11 or under, pick 12.0 for the ramdisk version. Otherwise, use the current iOS version installed on your device.
     - If you're on Linux, you will not be able to make a ramdisk for 16.1+, please use something lower instead, like 16.0
         - This is due to ramdisks switching to APFS over HFS+, and another dmg library would have to be used
 3. Place your device into DFU mode
@@ -36,6 +36,16 @@ Create and boot a SSH ramdisk on checkm8 devices
     - /private/preboot is mounted to /mnt6.
     - DO NOT RUN THIS IF THE DEVICE IS ON A REALLY OLD VERSION!!!!!!!
 7. Have fun!
+
+# Dumping Nand
+1. Follow [Usage](https://github.com/Lawin0129/SSHRD_Script?tab=readme-ov-file#usage) up to step 4.
+2. Once you've booted the ramdisk, run `./sshrd.sh dump-nand`
+    - You can also dump specific partitions,
+        - Run `./sshrd.sh dump-mnt1` to dump the whole RootFS (disk0s1s1)
+        - Run `./sshrd.sh dump-mnt2` to dump the whole user data partition (disk0s1s2)
+3. It should now start dumping. After disk0 is dumped, it will ask if you want to dump the specific partitions for any reason you might want them (disk0 should contain everything though).
+4. The dumps will be saved in the current directory with the file names `disk0.gz`, `disk0s1s1.gz`, `disk0s1s2.gz`
+5. Once everything is done, your iDevice will reboot into Recovery Mode. Run `./sshrd.sh fix-auto-boot` to kick it out of Recovery Mode.
 
 # Linux notes
 
