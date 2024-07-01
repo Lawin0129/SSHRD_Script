@@ -41,11 +41,11 @@ Create and boot a SSH ramdisk on checkm8 devices
 1. Follow [Usage](https://github.com/Lawin0129/SSHRD_Script?tab=readme-ov-file#usage) up to step 4.
 2. Once you've booted the ramdisk, run `./sshrd.sh dump-nand`
     - You can also dump specific partitions,
-        - Run `./sshrd.sh dump-mnt1` to dump the whole RootFS (disk0s1s1)
-        - Run `./sshrd.sh dump-mnt2` to dump the whole user data partition (disk0s1s2)
+        - Run `sudo ./sshrd.sh dump-mnt1` to dump the whole RootFS (disk0s1s1)
+        - Run `sudo ./sshrd.sh dump-mnt2` to dump the whole user data partition (disk0s1s2)
 3. It should now start dumping. After disk0 is dumped, it will ask if you want to dump the specific partitions for any reason you might want them (disk0 should contain everything though).
 4. The dumps will be saved in the current directory with the file names `disk0.gz`, `disk0s1s1.gz`, `disk0s1s2.gz`
-5. Once everything is done, your iDevice will reboot into Recovery Mode. Run `./sshrd.sh fix-auto-boot` to kick it out of Recovery Mode.
+5. Once everything is done, your iDevice will reboot into Recovery Mode. Run `sudo ./sshrd.sh fix-auto-boot` to kick it out of Recovery Mode.
 
 # Linux notes
 
