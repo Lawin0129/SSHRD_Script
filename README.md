@@ -31,10 +31,14 @@ Create and boot a SSH ramdisk on checkm8 devices
     - A11 users, go to recovery first, then DFU.
 4. Run `sudo ./sshrd.sh boot` to boot the ramdisk
 5. Run `sudo ./sshrd.sh ssh` to connect to SSH on your device
-6. Finally, to mount the filesystems, run `mount_filesystems`  
-    - /var is mounted to /mnt2 in the ssh session.
-    - /private/preboot is mounted to /mnt6.
-    - DO NOT RUN THIS IF THE DEVICE IS ON A REALLY OLD VERSION!!!!!!!
+6. Finally, to mount the filesystems,
+    - For iOS 7.0 - 10.2.1:
+        - Run `mount_hfs /dev/disk0s1s1 /mnt1` to mount the RootFS (iOS Firmware) partition on /mnt1
+        - Run `mount_hfs /dev/disk0s1s2 /mnt2` to mount the UserData partition on /mnt2
+    - For iOS 10.3 and above:
+        - Run `mount_apfs /dev/disk0s1s1 /mnt1` to mount the RootFS (iOS Firmware) partition on /mnt1
+        - Run `mount_apfs /dev/disk0s1s2 /mnt2` to mount the UserData partition on /mnt2
+    - For iOS 11 and above, you can also try running `mount_filesystems` which mounts every partition. Do not run if below iOS 11.
 7. Have fun!
 
 # Dumping Nand
