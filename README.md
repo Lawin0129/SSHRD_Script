@@ -31,11 +31,15 @@ Create and boot a SSH ramdisk on checkm8 devices
     - A11 users, go to recovery first, then DFU.
 4. Run `sudo ./sshrd.sh boot` to boot the ramdisk
 5. Run `sudo ./sshrd.sh ssh` to connect to SSH on your device
-6. Finally, to mount the filesystems, run `mount_filesystems`  
-    - /var is mounted to /mnt2 in the ssh session.
-    - /private/preboot is mounted to /mnt6.
-    - DO NOT RUN THIS IF THE DEVICE IS ON A REALLY OLD VERSION!!!!!!!
-7. Have fun!
+6. Finally, to mount the filesystems, run either:
+    iOS 8 or below: `mount_hfs /dev/disk0s1s1 /mnt1` and (for userdata partition) `mount_hfs /dev/disk0s1s2 /mnt2`
+    iOS 9 or above: `mount_apfs /dev/disk0s1s1 /mnt1` and (for userdata partition) `mount_apfs /dev/disk0s1s2 /mnt2`
+
+      - /var is mounted to /mnt2 in the ssh session.
+      - /private/preboot is mounted to /mnt6.
+      - DO NOT RUN THIS IF THE DEVICE IS ON A REALLY OLD VERSION!!!!!!!
+      
+8. Have fun!
 
 # Dumping Nand
 1. Follow [Usage](https://github.com/Lawin0129/SSHRD_Script?tab=readme-ov-file#usage) up to step 4.
