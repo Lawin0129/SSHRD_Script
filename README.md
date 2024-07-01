@@ -32,7 +32,9 @@ Create and boot a SSH ramdisk on checkm8 devices
 4. Run `sudo ./sshrd.sh boot` to boot the ramdisk
 5. Run `sudo ./sshrd.sh ssh` to connect to SSH on your device
 6. Finally, to mount the filesystems, run either:
+
     iOS 8 or below: `mount_hfs /dev/disk0s1s1 /mnt1` and (for userdata partition) `mount_hfs /dev/disk0s1s2 /mnt2`
+   
     iOS 9 or above: `mount_apfs /dev/disk0s1s1 /mnt1` and (for userdata partition) `mount_apfs /dev/disk0s1s2 /mnt2`
 
       - /var is mounted to /mnt2 in the ssh session.
