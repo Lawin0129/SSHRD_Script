@@ -23,14 +23,14 @@ Create and boot a SSH ramdisk on checkm8 devices
 
 1. Clone and cd into this repository: `git clone https://github.com/Lawin0129/SSHRD_Script --recursive && cd SSHRD_Script`
     - If you have cloned this before, run `cd SSHRD_Script && git pull` to pull new changes
-2. Run `./sshrd.sh <iOS version for ramdisk>`, **without** the `<>`.
+2. Run `sudo ./sshrd.sh <iOS version for ramdisk>`, **without** the `<>`.
     - If your device is on iOS 11 or under, pick 12.0 for the ramdisk version. Otherwise, use the current iOS version installed on your device.
     - If you're on Linux, you will not be able to make a ramdisk for 16.1+, please use something lower instead, like 16.0
         - This is due to ramdisks switching to APFS over HFS+, and another dmg library would have to be used
 3. Place your device into DFU mode
     - A11 users, go to recovery first, then DFU.
-4. Run `./sshrd.sh boot` to boot the ramdisk
-5. Run `./sshrd.sh ssh` to connect to SSH on your device
+4. Run `sudo ./sshrd.sh boot` to boot the ramdisk
+5. Run `sudo ./sshrd.sh ssh` to connect to SSH on your device
 6. Finally, to mount the filesystems, run `mount_filesystems`  
     - /var is mounted to /mnt2 in the ssh session.
     - /private/preboot is mounted to /mnt6.
@@ -57,17 +57,17 @@ sudo usbmuxd -p -f
 
 # Other commands
 
-- Reboot your device: `./sshrd.sh reboot`
-- Erase all data from your device: `./sshrd.sh reset`
-- Fixes auto-boot on your device: `./sshrd.sh fix-auto-boot`
-- Dump onboard SHSH blobs: `./sshrd.sh dump-blobs`
-- Dump ENTIRE contents of your device: `./sshrd.sh dump-nand`
-- Dump mnt1 of your device: `./sshrd.sh dump-mnt1`
-- Dump mnt2 of your device: `./sshrd.sh dump-mnt2`
-- Restores nand dump to your device: `./sshrd.sh restore-nand`
-- Restores mnt1 dump to your device: `./sshrd.sh restore-mnt1`
-- Restores mnt2 dump to your device: `./sshrd.sh restore-mnt2`
-- Delete old SSH ramdisk: `./sshrd.sh clean`
+- Reboot your device: `sudo ./sshrd.sh reboot`
+- Erase all data from your device: `sudo ./sshrd.sh reset`
+- Fixes auto-boot on your device: `sudo ./sshrd.sh fix-auto-boot`
+- Dump onboard SHSH blobs: `sudo ./sshrd.sh dump-blobs`
+- Dump ENTIRE contents of your device: `sudo ./sshrd.sh dump-nand`
+- Dump mnt1 of your device: `sudo ./sshrd.sh dump-mnt1`
+- Dump mnt2 of your device: `sudo ./sshrd.sh dump-mnt2`
+- Restores nand dump to your device: `sudo ./sshrd.sh restore-nand`
+- Restores mnt1 dump to your device: `sudo ./sshrd.sh restore-mnt1`
+- Restores mnt2 dump to your device: `sudo ./sshrd.sh restore-mnt2`
+- Delete old SSH ramdisk: `sudo ./sshrd.sh clean`
 
 # Other Stuff
 
