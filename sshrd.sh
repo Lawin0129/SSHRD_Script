@@ -221,7 +221,7 @@ if [ "$1" = 'reset' ]; then
 
     if [ "$check" = '0x8960' ]; then
         if [ "$oscheck" = 'Darwin' ]; then
-            "$oscheck"/ipwnder2 -p > /dev/null
+            "$oscheck"/ipwnder2 -p > /dev/null || true
         else
             "$oscheck"/ipwnder > /dev/null
         fi
@@ -268,7 +268,7 @@ if [ "$1" = 'boot' ]; then
     
     if [ "$check" = '0x8960' ]; then
         if [ "$oscheck" = 'Darwin' ]; then
-            "$oscheck"/ipwnder2 -p > /dev/null
+            "$oscheck"/ipwnder2 -p > /dev/null || true
         else
             "$oscheck"/ipwnder > /dev/null
         fi
