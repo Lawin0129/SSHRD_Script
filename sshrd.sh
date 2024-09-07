@@ -220,7 +220,11 @@ if [ "$1" = 'reset' ]; then
     fi
 
     if [ "$check" = '0x8960' ]; then
-        "$oscheck"/ipwnder > /dev/null
+        if [ "$oscheck" = 'Darwin' ]; then
+            "$oscheck"/ipwnder2 -p > /dev/null
+        else
+            "$oscheck"/ipwnder > /dev/null
+        fi
     else
         "$oscheck"/gaster pwn > /dev/null
     fi
@@ -263,7 +267,11 @@ if [ "$1" = 'boot' ]; then
     patch=${patch:-0}
     
     if [ "$check" = '0x8960' ]; then
-        "$oscheck"/ipwnder > /dev/null
+        if [ "$oscheck" = 'Darwin' ]; then
+            "$oscheck"/ipwnder2 -p > /dev/null
+        else
+            "$oscheck"/ipwnder > /dev/null
+        fi
     else
         "$oscheck"/gaster pwn > /dev/null
     fi
