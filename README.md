@@ -17,13 +17,13 @@ Create and boot a SSH ramdisk on checkm8 devices
 # Prerequsites
 
 1. A computer running macOS/linux
-2. A checkm8 device (A7-A11)
+2. A checkm8 vulnerable iDevice (chipsets A7-A11)
 
 # Usage
 
 1. Clone and cd into this repository: `git clone https://github.com/Lawin0129/SSHRD_Script --recursive && cd SSHRD_Script`
     - If you have cloned this before, run `cd SSHRD_Script && git pull` to pull new changes
-2. Run `sudo ./sshrd.sh <iOS version for ramdisk>`, **without** the `<>`.
+2. Run `sudo ./sshrd.sh <iOS version for ramdisk>`, **without** the `<` and `>`.
     - If your device is on iOS 11 or under, pick 12.0 for the ramdisk version. Otherwise, use the current iOS version installed on your device.
     - If you're on Linux, you will not be able to make a ramdisk for 16.1+, please use something lower instead, like 16.0
         - This is due to ramdisks switching to APFS over HFS+, and another dmg library would have to be used
@@ -43,7 +43,7 @@ Create and boot a SSH ramdisk on checkm8 devices
 
 # Dumping Nand
 1. Follow [Usage](https://github.com/Lawin0129/SSHRD_Script?tab=readme-ov-file#usage) up to step 4.
-2. Once you've booted the ramdisk, run `./sshrd.sh dump-nand`
+2. Once you've booted the ramdisk, run `sudo ./sshrd.sh dump-nand`
     - You can also dump specific partitions,
         - Run `sudo ./sshrd.sh dump-mnt1` to dump the whole RootFS (disk0s1s1)
         - Run `sudo ./sshrd.sh dump-mnt2` to dump the whole user data partition (disk0s1s2)
