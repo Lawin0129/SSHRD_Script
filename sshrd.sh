@@ -265,15 +265,21 @@ if [ "$1" = 'boot' ]; then
     major=${major:-0}
     minor=${minor:-0}
     patch=${patch:-0}
+
+    read -p "Have you already pwned this iDevice? (Y/n) " user_response
     
-    if [ "$check" = '0x8960' ]; then
-        if [ "$oscheck" = 'Darwin' ]; then
-            "$oscheck"/ipwnder2 -p > /dev/null || true
+    user_response=$(echo "$user_response" | tr '[:upper:]' '[:lower:]')
+    
+    if [[ "$user_response" == "no" || "$user_response" == "n" ]]; then
+        if [ "$check" = '0x8960' ]; then
+            if [ "$oscheck" = 'Darwin' ]; then
+                "$oscheck"/ipwnder2 -p > /dev/null || true
+            else
+                "$oscheck"/ipwnder > /dev/null
+            fi
         else
-            "$oscheck"/ipwnder > /dev/null
+            "$oscheck"/gaster pwn > /dev/null
         fi
-    else
-        "$oscheck"/gaster pwn > /dev/null
     fi
     "$oscheck"/gaster reset > /dev/null
     "$oscheck"/irecovery -f sshramdisk/iBSS.img4
