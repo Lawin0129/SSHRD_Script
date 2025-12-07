@@ -41,13 +41,6 @@ if [ -e sshtars/ssh.tar.gz ]; then
     fi
 fi
 
-if [ ! -e "$oscheck"/gaster ]; then
-    curl -sLO https://nightly.link/verygenericname/gaster/workflows/makefile/main/gaster-"$oscheck".zip
-    unzip gaster-"$oscheck".zip
-    mv gaster "$oscheck"/
-    rm -rf gaster gaster-"$oscheck".zip
-fi
-
 chmod +x "$oscheck"/*
 
 if [ "$1" = 'fix-auto-boot' ]; then
@@ -218,16 +211,8 @@ if [ "$1" = 'reset' ]; then
         echo "[-] Please create an SSH ramdisk first!"
         exit
     fi
-
-    if [ "$check" = '0x8960' ]; then
-        if [ "$oscheck" = 'Darwin' ]; then
-            "$oscheck"/ipwnder2 -p > /dev/null || true
-        else
-            "$oscheck"/ipwnder > /dev/null
-        fi
-    else
-        "$oscheck"/gaster pwn > /dev/null
-    fi
+    
+    "$oscheck"/gaster pwn > /dev/null
     "$oscheck"/gaster reset > /dev/null
     "$oscheck"/irecovery -f sshramdisk/iBSS.img4
     sleep 2
@@ -271,15 +256,7 @@ if [ "$1" = 'boot' ]; then
     user_response=$(echo "$user_response" | tr '[:upper:]' '[:lower:]')
     
     if [[ "$user_response" == "no" || "$user_response" == "n" ]]; then
-        if [ "$check" = '0x8960' ]; then
-            if [ "$oscheck" = 'Darwin' ]; then
-                "$oscheck"/ipwnder2 -p > /dev/null || true
-            else
-                "$oscheck"/ipwnder > /dev/null
-            fi
-        else
-            "$oscheck"/gaster pwn > /dev/null
-        fi
+        "$oscheck"/gaster pwn > /dev/null
     fi
     "$oscheck"/gaster reset > /dev/null
     "$oscheck"/irecovery -f sshramdisk/iBSS.img4
